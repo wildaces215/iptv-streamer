@@ -1,0 +1,36 @@
+appId: dev.aion.iptv-streamer
+productName: IPTV Streamer
+directories:
+  buildResources: build
+  output: release
+files:
+  - out/**
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json,vitest.config.ts}'
+asarUnpack:
+  - '**/*.node'
+afterPack: ./scripts/fix-exec-bits.cjs
+linux:
+  target:
+    - appimage
+    - rpm
+  category: Multimedia
+  icon: build/icon.png
+mac:
+  target:
+    - dmg
+  category: public.app-category.entertainment
+  # electron-builder converts a 512px png to .icns automatically
+  icon: build/icon.png
+  # Gatekeeper: unsigned dev builds will be blocked; set CSC_LINK/CSC_KEY_PASSWORD
+  # in CI to sign, or leave for local testing (right-click → Open).
+win:
+  target:
+    - nsis
+  # electron-builder converts a 512px png to .ico automatically
+  icon: build/icon.png
+npmRebuild: true
